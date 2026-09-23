@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Patel — Aspiring Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0a24; --bg-2:#160f38;
+    --violet:#6d4aff; --violet-2:#a78bfa;
+    --text:#f5f3ff; --muted:#a79fc0; --line:rgba(255,255,255,0.1);
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(90px + env(safe-area-inset-top,0px));height:100%;}
+  body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+  h1,h2,.serif{font-family:'Playfair Display',serif;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  ::selection{background:var(--violet);color:#fff;}
+  section{position:relative;z-index:1;overflow:hidden;}
+
+  .dots{position:absolute;background-image:radial-gradient(rgba(255,255,255,0.4) 1.4px, transparent 1.4px);background-size:15px 15px;opacity:0.45;pointer-events:none;}
+  .dots-a{width:150px;height:90px;top:70px;right:40px;}
+  .dots-b{width:150px;height:90px;bottom:50px;left:24px;}
+
+  header{position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(14,10,36,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1180px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.05rem;}
+  .mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--violet),var(--violet-2));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;color:#fff;}
+  .navlinks{display:flex;gap:6px;align-items:center;}
+  .navlinks a{padding:9px 18px;border-radius:999px;font-size:0.92rem;color:var(--muted);transition:color .25s ease, background .25s ease;}
+  .navlinks a:hover{color:var(--text);}
+  .navlinks a.active{color:var(--text);background:var(--violet);}
+  @media (max-width:640px){.navlinks{gap:2px}.navlinks a{padding:8px 11px;font-size:0.8rem;}}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none;} .float{animation:none !important;}}
+
+  /* hero */
+  .hero{min-height:calc(100vh - 70px);display:flex;align-items:center;padding:50px 0 60px;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;width:100%;}
+  .badge{display:inline-block;background:var(--violet);color:#fff;padding:11px 22px;border-radius:999px;font-size:0.95rem;font-weight:500;box-shadow:0 10px 30px rgba(109,74,255,0.35);}
+  .hero h1{font-size:clamp(3rem,7.5vw,5.2rem);line-height:1;font-weight:700;margin:10px 0 22px;}
+  .hero p{color:var(--muted);font-size:1.02rem;line-height:1.7;max-width:44ch;margin:0 0 30px;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font-size:0.95rem;font-weight:500;border:1px solid var(--line);transition:transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;}
+  .btn:hover{transform:translateY(-3px);}
+  .btn-primary{border:1px solid var(--violet);background:rgba(109,74,255,0.14);}
+  .btn-primary:hover{background:var(--violet);box-shadow:0 12px 28px rgba(109,74,255,0.4);}
+  .btn-ghost:hover{border-color:var(--violet);}
+  .illus{width:100%;height:auto;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}.hero p{max-width:none;}}
+
+  .sec-head{margin-bottom:40px;}
+  .sec-head .kicker{color:var(--violet-2);font-weight:600;font-size:0.95rem;margin:0 0 8px;}
+  .sec-head h2{font-size:clamp(1.9rem,4vw,2.4rem);font-weight:700;margin:0;}
+
+  /* about */
+  .about{padding:100px 0;border-top:1px solid var(--line);}
+  .about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;}
+  .about h2{font-size:clamp(1.9rem,4.4vw,2.6rem);margin:0 0 24px;}
+  .about p.lead{color:#d9d3ea;line-height:1.8;font-size:1.02rem;margin:0;max-width:52ch;}
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr;}}
+
+  /* skills */
+  .skills{padding:100px 0;border-top:1px solid var(--line);background:var(--bg-2);}
+  .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+  .skill-block{margin-bottom:30px;}
+  .skill-block h3{font-size:0.85rem;color:var(--muted);font-weight:500;margin:0 0 14px;}
+  .pills{display:flex;flex-wrap:wrap;gap:9px;}
+  .pill{padding:9px 17px;border-radius:999px;font-size:0.86rem;border:1px solid var(--line);color:#ece9f7;background:var(--bg);transition:border-color .2s ease, transform .2s ease;}
+  .pill:hover{border-color:var(--violet);transform:translateY(-2px);}
+  .pill.on{border-color:rgba(109,74,255,0.55);}
+  .edu-card{border:1px solid var(--line);border-radius:16px;padding:26px 28px;background:var(--bg);transition:border-color .2s ease;}
+  .edu-card:hover{border-color:var(--violet);}
+  .edu-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin:0 0 6px;}
+  .edu-card .meta{color:var(--violet-2);font-size:0.88rem;margin:0 0 14px;}
+  .edu-card p{color:var(--muted);font-size:0.92rem;line-height:1.6;margin:0;}
+  @media (max-width:900px){.skills-grid{grid-template-columns:1fr;gap:36px;}}
+
+  /* projects */
+  .projects{padding:100px 0;border-top:1px solid var(--line);}
+  .proj-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden;}
+  .proj{background:var(--bg);padding:38px 36px;display:grid;grid-template-columns:60px 1fr auto;gap:26px;align-items:start;transition:background .25s ease;}
+  .proj:hover{background:var(--bg-2);}
+  .proj-num{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--muted);font-weight:700;}
+  .proj-title{font-size:1.3rem;font-weight:700;margin:0 0 6px;font-family:'Playfair Display',serif;}
+  .proj-tag{display:inline-block;font-size:0.78rem;color:var(--violet-2);border:1px solid rgba(109,74,255,0.4);padding:4px 12px;border-radius:999px;margin-bottom:14px;}
+  .proj-desc{color:var(--muted);line-height:1.65;font-size:0.95rem;max-width:60ch;}
+  .proj-link{align-self:center;display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid var(--line);font-size:0.85rem;white-space:nowrap;height:fit-content;transition:border-color .2s ease, color .2s ease, transform .2s ease;}
+  .proj-link:hover{border-color:var(--violet);color:var(--violet-2);transform:translateY(-2px);}
+  @media (max-width:760px){.proj{grid-template-columns:1fr;gap:14px;}.proj-link{width:fit-content;}}
+
+  /* contact */
+  .contact{padding:110px 0 90px;border-top:1px solid var(--line);}
+  .contact h2{font-size:clamp(2.1rem,5vw,3rem);margin:0 0 20px;font-weight:700;}
+  .contact p{color:var(--muted);max-width:52ch;line-height:1.7;margin:0 0 36px;}
+  .contact-grid{display:flex;flex-wrap:wrap;gap:14px;}
+  .contact-item{display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:14px;border:1px solid var(--line);font-size:0.92rem;color:#ece9f7;transition:border-color .2s ease, transform .2s ease;}
+  .contact-item:hover{border-color:var(--violet);transform:translateY(-2px);}
+
+  footer{border-top:1px solid var(--line);padding:26px 0;padding-bottom:calc(26px + env(safe-area-inset-bottom,0px));}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:0.85rem;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="mark">H</span>Happy Patel</div>
+    <div class="navlinks" id="navlinks">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="dots dots-a"></div>
+  <div class="dots dots-b"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="badge reveal" style="transition-delay:.05s;">Turning Data Into Insights</span>
+      <h1 class="reveal" style="transition-delay:.15s;">Data Analyst</h1>
+      <p class="reveal" style="transition-delay:.25s;">Hands-on with Python, SQL, Excel and Power BI — I take datasets from raw and messy to clean, visualized and decision-ready.</p>
+      <div class="cta-row reveal" style="transition-delay:.35s;">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="reveal float" style="transition-delay:.2s; animation:floaty 5s ease-in-out infinite;">
+      <svg class="illus" viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6d4aff"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c4b5fd"/><stop offset="100%" stop-color="#6d4aff"/>
+          </linearGradient>
+        </defs>
+        <polyline points="20,240 90,175 150,205 230,95" fill="none" stroke="url(#g1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M230,95 L280,55 M280,55 L262,58 M280,55 L277,73" stroke="url(#g1)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="255" cy="150" r="78" stroke="#e5e0fb" stroke-width="9" fill="none" opacity="0.9"/>
+        <line x1="313" y1="205" x2="360" y2="252" stroke="url(#g2)" stroke-width="16" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="kicker reveal">About</p>
+      <h2 class="reveal">A little about my approach to data</h2>
+      <p class="lead reveal">I'm an aspiring Data Analyst pursuing a BSc in Information Technology, with hands-on project experience across Python, SQL, Excel and Power BI. I enjoy the full journey from raw data to a finished story — cleaning messy datasets, exploring them for patterns, and building visualizations and dashboards that make insights easy to understand and act on. I'm currently looking for Data Analyst internships and entry-level roles where I can keep building these skills.</p>
+    </div>
+    <div class="reveal">
+      <svg class="illus" viewBox="0 0 380 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g3" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#6d4aff"/><stop offset="100%" stop-color="#c4b5fd"/>
+          </linearGradient>
+        </defs>
+        <path d="M15,230 L70,175 L120,205 L190,90" stroke="url(#g3)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M190,90 L235,55 M235,55 L219,58 M235,55 L232,74" stroke="url(#g3)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="60" y="170" width="34" height="80" rx="6" fill="url(#g3)" opacity="0.85"/>
+        <rect x="130" y="140" width="34" height="110" rx="6" fill="url(#g3)" opacity="0.7"/>
+        <rect x="200" y="185" width="34" height="65" rx="6" fill="url(#g3)" opacity="0.55"/>
+        <circle cx="235" cy="200" r="60" stroke="#e5e0fb" stroke-width="7" fill="none" opacity="0.9"/>
+        <line x1="279" y1="244" x2="315" y2="280" stroke="url(#g3)" stroke-width="12" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Skills &amp; Education</p>
+      <h2>What I work with</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="reveal">
+        <div class="skill-block">
+          <h3>Languages</h3>
+          <div class="pills"><span class="pill on">Python</span><span class="pill on">SQL</span></div>
+        </div>
+        <div class="skill-block">
+          <h3>Tools &amp; Platforms</h3>
+          <div class="pills"><span class="pill on">Power BI</span><span class="pill on">MS Excel</span><span class="pill on">Jupyter Notebook</span></div>
+        </div>
+        <div class="skill-block">
+          <h3>Soft Skills</h3>
+          <div class="pills">
+            <span class="pill">Problem Solving</span><span class="pill">Communication</span><span class="pill">Teamwork</span>
+            <span class="pill">Time Management</span><span class="pill">Attention to Detail</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-block" style="margin-bottom:0;">
+          <h3>Education</h3>
+          <div class="edu-card">
+            <h3>B.Sc. in Information Technology</h3>
+            <p class="meta">Vidhyadeep University · 2025 – 2028</p>
+            <p>Coursework: Data Structures, DBMS, Statistics, Business Intelligence, Python Programming.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Selected Work</p>
+      <h2>Projects</h2>
+    </div>
+    <div class="proj-list reveal">
+      <div class="proj">
+        <div class="proj-num">01</div>
+        <div>
+          <div class="proj-tag">Python</div>
+          <h3 class="proj-title">Retail Sales Analysis</h3>
+          <p class="proj-desc">Analyzed an Indian retail sales dataset to evaluate revenue across product categories, regions, customer types, months and cities. The workflow covered cleaning and EDA — missing-value checks, duplicate detection, data-type validation and date transformation — followed by visualizations surfacing top-performing categories, cities, monthly revenue trends and discount-revenue relationships.</p>
+        </div>
+        <a class="proj-link" href="https://github.com/Patelhappy35/Python-Retail_Sales_Analysis" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+      <div class="proj">
+        <div class="proj-num">02</div>
+        <div>
+          <div class="proj-tag">Excel</div>
+          <h3 class="proj-title">Nexora Group Analytics Dashboard</h3>
+          <p class="proj-desc">Built an interactive dashboard analyzing 250+ customer transactions, revenue, product performance, customer trends and regional sales using Pivot Tables, Pivot Charts, Slicers, Timelines and KPI indicators. Applied FILTER, Scenario Manager, Goal Seek, Conditional Formatting and Linear Regression to generate business insights.</p>
+        </div>
+        <a class="proj-link" href="https://github.com/Patelhappy35/EXCEL-Nexora-Group-Analytics" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+      <div class="proj">
+        <div class="proj-num">03</div>
+        <div>
+          <div class="proj-tag">Power BI · DAX</div>
+          <h3 class="proj-title">Airline Operations &amp; Performance Analysis</h3>
+          <p class="proj-desc">Developed an interactive dashboard analyzing flight volume, delays, cancellations and on-time performance across airlines and airports, using DAX, interactive visualizations, maps, drill-through and forecasting to surface operational insights.</p>
+        </div>
+        <a class="proj-link" href="https://github.com/Patelhappy35/Power-BI-FlightDelay-Analysis" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+      <div class="proj">
+        <div class="proj-num">04</div>
+        <div>
+          <div class="proj-tag">SQL</div>
+          <h3 class="proj-title">SQL Student Tracker</h3>
+          <p class="proj-desc">Designed a relational database for a college's student records, covering Departments, Students, Faculty, Courses, Enrollments, Attendance and Grades with primary/foreign key relationships. Wrote queries spanning CRUD operations, joins, subqueries, aggregate functions, window functions (RANK, running totals), CASE-based performance and attendance categorization, and date/string functions to surface enrollment trends, grade distributions and attendance rates.</p>
+        </div>
+        <a class="proj-link" href="https://github.com/Patelhappy35/SQL-Student_Tracker" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2 class="reveal">Let's work together</h2>
+    <p class="reveal">Open to internships and entry-level data analyst roles — reach out by email, or find the work on GitHub and LinkedIn.</p>
+    <div class="contact-grid reveal">
+      <a class="contact-item" href="mailto:ptlhappy35@gmail.com">✉ ptlhappy35@gmail.com</a>
+      <a class="contact-item" href="tel:+916351233554">☎ +91 6351233554</a>
+      <a class="contact-item" href="https://github.com/Patelhappy35" target="_blank" rel="noopener">⌥ github.com/Patelhappy35</a>
+      <a class="contact-item" href="https://linkedin.com/in/happypatel625v" target="_blank" rel="noopener">in linkedin.com/in/happypatel625v</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 Happy Patel</span>
+    <span>Built with Python · SQL · Power BI · Excel</span>
+  </div>
+</footer>
+
+<script>
+  const links = document.querySelectorAll('#navlinks a');
+  const sections = ['home','about','skills','projects','contact'].map(id => document.getElementById(id));
+  const setActive = () => {
+    let current = sections[0].id;
+    const y = window.scrollY + 120;
+    sections.forEach(s => { if (s.offsetTop <= y) current = s.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', setActive, {passive:true});
+  setActive();
+
+  // hero load-in sequence
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('in'));
+  });
+
+  // scroll-triggered reveals for the rest of the page
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, {threshold:0.2});
+  document.querySelectorAll('.reveal:not(.hero .reveal)').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
